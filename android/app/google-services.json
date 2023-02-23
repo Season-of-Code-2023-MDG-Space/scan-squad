@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "465127006652",
+    "project_id": "scrypt-pdf-scanner",
+    "storage_bucket": "scrypt-pdf-scanner.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:465127006652:android:579176b911d71774aacbb9",
+        "android_client_info": {
+          "package_name": "com.example.scansquad"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "465127006652-qacgpn90720mb91gf07ca5sjke1e55cl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCH39BhXeiZDeVpL9CE-SMwoXBp0QofkQk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "465127006652-qacgpn90720mb91gf07ca5sjke1e55cl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
