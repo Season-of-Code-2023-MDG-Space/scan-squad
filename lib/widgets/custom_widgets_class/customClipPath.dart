@@ -15,7 +15,6 @@ class CurveClipPath extends CustomClipper<Path> {
     path.quadraticBezierTo(
         size.width * 0.998, size.height * 0.465, size.width, size.height * 0.5);
     path.lineTo(size.width, size.height);
-    path.lineTo(size.width, size.height);
     path.close();
     return path;
   }

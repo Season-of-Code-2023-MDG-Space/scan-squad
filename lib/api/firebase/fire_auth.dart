@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FireAuth {
@@ -14,6 +15,10 @@ class FireAuth {
         password: password,
       );
       user = userCredential.user;
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user?.uid)
+          .set({'userName': userName, 'emailId': email});
       await user!.updateDisplayName(userName);
       await user.reload();
       user = auth.currentUser;
@@ -64,17 +69,4 @@ class FireAuth {
         .sendPasswordResetEmail(email: email!)
         .catchError((e) => print(e));
   }
-  // Future<void> userSetup(String displayName) async {
-  //   //firebase auth instance to get uuid of user
-  //   User auth = FirebaseAuth.instance.currentUser!;
-
-  //   //now below I am getting an instance of firebaseiestore then getting the user collection
-  //   //now I am creating the document if not already exist and setting the data.
-  //   FirebaseFirestore.instance
-  //       .collection('users')
-  //       .doc(auth.uid)
-  //       .set({'displayName': displayName, 'uid': auth.uid});
-
-  //   return;
-  // }
 }

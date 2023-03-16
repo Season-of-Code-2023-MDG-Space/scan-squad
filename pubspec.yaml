@@ -37,7 +37,26 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_auth: ^4.2.8
   firebase_core: ^2.6.1
-
+  firebase_storage: ^11.0.15
+  cloud_firestore: ^4.4.3
+  image_picker: ^0.8.6+2
+  image: ^3.0.1
+  reorderable_grid_view: ^2.2.6
+  syncfusion_flutter_pdf: ^20.4.51
+  open_filex: ^4.3.2
+  path_provider: ^2.0.13
+  android_path_provider: ^0.3.0
+  barcode_image: ^2.0.2
+  geolocator: ^9.0.2
+  file_picker: ^5.2.5
+  pdfx: ^2.3.0
+  scan: ^1.6.0
+  encrypt: ^5.0.1
+  share_plus: ^6.3.1
+  flutter_secure_storage: ^8.0.0
+  googleapis: ^10.1.0
+  google_sign_in: ^6.0.2
+  http: ^0.13.5
 dev_dependencies:
   flutter_test:
     sdk: flutter

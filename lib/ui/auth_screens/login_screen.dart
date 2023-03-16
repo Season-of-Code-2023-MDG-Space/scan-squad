@@ -15,11 +15,13 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController _emailTextController = TextEditingController();
-  TextEditingController _passwordTextController = TextEditingController();
+  final TextEditingController _emailTextController = TextEditingController();
+  final TextEditingController _passwordTextController = TextEditingController();
   final _focusEmail = FocusNode();
   final _focusPassword = FocusNode();
   bool _showPassword = false;
+  bool _isProcessing = false;
+  @override
   void initState() {
     super.initState();
     _focusEmail.unfocus();
@@ -35,166 +37,183 @@ class _LoginScreenState extends State<LoginScreen> {
       }),
       child: Scaffold(
         backgroundColor: Color.fromRGBO(38, 126, 157, 1),
-        body: SingleChildScrollView(
-          child: Stack(children: [
-            Positioned(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 80),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.pages,
-                      size: 65,
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Scrypt",
-                          style: TextStyle(
-                              fontSize: 26, fontWeight: FontWeight.w700),
-                        ),
-                        Text(
-                          'Tagline',
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w500),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
-            SingleChildScrollView(
-              child: ClipPath(
-                clipper: CurveClipPath(),
-                child: Container(
-                  height: MediaQuery.of(context).size.height,
+        body: _isProcessing
+            ? const Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.transparent,
                   color: Colors.white,
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.4,
-                      ),
-                      bigText('Login', Colors.black,
-                          const EdgeInsets.symmetric(vertical: 30)),
-                      Form(
-                        key: _formKey,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 40),
-                          child: Container(
-                            height: 150,
-                            child: Column(
-                              children: [
-                                Expanded(
-                                  child: editText(
-                                    hintText: "Email",
-                                    focusNode: _focusEmail,
-                                    controller: _emailTextController,
-                                    validator: (value) =>
-                                        Validator.validateEmail(email: value!),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                Expanded(
-                                  child: editText(
-                                    hintText: "Password",
-                                    focusNode: _focusPassword,
-                                    controller: _passwordTextController,
-                                    obscureText: _showPassword ? false : true,
-                                    requireSuffixIcon: IconButton(
-                                      onPressed: (() {
-                                        setState(() {
-                                          _showPassword = !_showPassword;
-                                        });
-                                      }),
-                                      icon: const Icon(
-                                          Icons.remove_red_eye_sharp),
-                                    ),
-                                    validator: (value) =>
-                                        Validator.validatePassword(
-                                            password: value!),
-                                  ),
-                                ),
-                              ],
-                            ),
+                ),
+              )
+            : SingleChildScrollView(
+                child: Stack(children: [
+                  Positioned(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 80),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Icons.pages,
+                            size: 65,
                           ),
-                        ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Scrypt",
+                                style: TextStyle(
+                                    fontSize: 26, fontWeight: FontWeight.w700),
+                              ),
+                              Text(
+                                'Tagline',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w500),
+                              )
+                            ],
+                          )
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 40),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                    ),
+                  ),
+                  SingleChildScrollView(
+                    child: ClipPath(
+                      clipper: CurveClipPath(),
+                      child: Container(
+                        height: MediaQuery.of(context).size.height,
+                        color: Colors.white,
+                        child: Column(
                           children: [
-                            customTextButton(
-                              onPressed: (() async {
-                                if (_emailTextController.text.isNotEmpty) {
-                                  await FireAuth.resetPassword(
-                                      email: _emailTextController.text);
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content: Text(
-                                              'Reset email sent to the registered email address')));
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content: Text(
-                                              "Email field can't be empty")));
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.4,
+                            ),
+                            bigText('Login', Colors.black,
+                                const EdgeInsets.symmetric(vertical: 30)),
+                            Form(
+                              key: _formKey,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 40),
+                                child: Container(
+                                  height: 150,
+                                  child: Column(
+                                    children: [
+                                      Expanded(
+                                        child: editText(
+                                          hintText: "Email",
+                                          focusNode: _focusEmail,
+                                          controller: _emailTextController,
+                                          validator: (value) =>
+                                              Validator.validateEmail(
+                                                  email: value!),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      Expanded(
+                                        child: editText(
+                                          hintText: "Password",
+                                          focusNode: _focusPassword,
+                                          controller: _passwordTextController,
+                                          obscureText:
+                                              _showPassword ? false : true,
+                                          requireSuffixIcon: IconButton(
+                                            onPressed: (() {
+                                              setState(() {
+                                                _showPassword = !_showPassword;
+                                              });
+                                            }),
+                                            icon: const Icon(
+                                                Icons.remove_red_eye_sharp),
+                                          ),
+                                          validator: (value) =>
+                                              Validator.validatePassword(
+                                                  password: value!),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 40),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  customTextButton(
+                                    onPressed: (() async {
+                                      if (_emailTextController
+                                          .text.isNotEmpty) {
+                                        await FireAuth.resetPassword(
+                                            email: _emailTextController.text);
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                                content: Text(
+                                                    'Reset email sent to the registered email address')));
+                                      } else {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                                content: Text(
+                                                    "Email field can't be empty")));
+                                      }
+                                    }),
+                                    labelText: "Forgot Password?",
+                                  ),
+                                ],
+                              ),
+                            ),
+                            flexedTextButton(
+                              "Log In",
+                              const EdgeInsets.symmetric(
+                                  horizontal: 40, vertical: 10),
+                              (() async {
+                                _focusEmail.unfocus();
+                                _focusPassword.unfocus();
+                                if (_formKey.currentState!.validate()) {
+                                  setState(() {
+                                    _isProcessing = true;
+                                  });
+                                  User? user =
+                                      await FireAuth.signInUsingEmailPassword(
+                                    email: _emailTextController.text,
+                                    password: _passwordTextController.text,
+                                  );
+                                  setState(() {
+                                    _isProcessing = false;
+                                  });
+                                  if (user != null) {
+                                    pushHomeScreen(context, user);
+                                  }
                                 }
                               }),
-                              labelText: "Forgot Password?",
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                customText(
+                                    'Don’t have account?',
+                                    16,
+                                    FontWeight.w400,
+                                    const Color.fromRGBO(130, 130, 130, 1),
+                                    const EdgeInsets.all(0)),
+                                customTextButton(
+                                    labelText: 'Create Now',
+                                    onPressed: (() {
+                                      goToRegisterPage(context);
+                                    }))
+                              ],
                             ),
                           ],
                         ),
                       ),
-                      flexedTextButton(
-                        "Log In",
-                        const EdgeInsets.symmetric(
-                            horizontal: 40, vertical: 10),
-                        (() async {
-                          _focusEmail.unfocus();
-                          _focusPassword.unfocus();
-                          if (_formKey.currentState!.validate()) {
-                            User? user =
-                                await FireAuth.signInUsingEmailPassword(
-                              email: _emailTextController.text,
-                              password: _passwordTextController.text,
-                            );
-                            if (user != null) {
-                              pushHomeScreen(context);
-                            }
-                          }
-                        }),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          customText(
-                              'Don’t have account?',
-                              16,
-                              FontWeight.w400,
-                              const Color.fromRGBO(130, 130, 130, 1),
-                              const EdgeInsets.all(0)),
-                          customTextButton(
-                              labelText: 'Create Now',
-                              onPressed: (() {
-                                goToRegisterPage(context);
-                              }))
-                        ],
-                      ),
-                    ],
+                    ),
                   ),
-                ),
+                ]),
               ),
-            ),
-          ]),
-        ),
       ),
     );
   }

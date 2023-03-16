@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:scansquad/firebase_options.dart';
 import 'package:scansquad/ui/auth_screens/login_screen.dart';
-import 'package:scansquad/ui/home/home_screen.dart';
+import 'package:scansquad/ui/home_screen_controller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,12 +42,13 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ThemeData().colorScheme.copyWith(
-              primary: Colors.black,
-            ),
+        colorScheme: ThemeData().colorScheme.copyWith(primary: Colors.black),
       ),
-      home: isLogin ? const HomeScreen() : const LoginScreen(),
+      home: isLogin
+          ? HomeScreenController(user: auth.currentUser!)
+          : const LoginScreen(),
     );
   }
 }
