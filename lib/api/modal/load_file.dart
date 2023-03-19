@@ -9,15 +9,16 @@ Future<List<FileSystemEntity>> getDir() async {
   // final directory = await getExternalStorageDirectory();
   // final dir = directory?.path;
   final myDir = Directory(docDir);
-  folders = myDir.listSync(recursive: true, followLinks: false);
+  folders = myDir.listSync();
   return folders;
 }
 
-Future<void> openPdfFile(String fileName) async {
+Future<void> openPdfFile(String filePath) async {
   // final directory = await getExternalStorageDirectory();
   // final dir = directory?.path;
-  // OpenFilex.open('$dir/$fileName');
-  final docDir = await AndroidPathProvider.documentsPath;
-  print('======pathIn=$docDir/$fileName');
-  OpenFilex.open('$docDir/$fileName');
+  // // OpenFilex.open('$dir/$fileName');
+  // final docDir = await AndroidPathProvider.documentsPath;
+  // print('======pathIn=$docDir/$filePath');
+  OpenFilex.open(
+      '/data/user/0/com.example.scansquad/cache/file_picker/$filePath');
 }

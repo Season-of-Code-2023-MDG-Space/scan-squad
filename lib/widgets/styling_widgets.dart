@@ -13,6 +13,19 @@ Widget customText(String text, double fontSize, FontWeight fontWeight,
       ));
 }
 
+Widget titleName(String text, double fontSize, FontWeight fontWeight,
+    Color color, String? fontFamily, double letterSpacing) {
+  return Text(
+    text,
+    style: TextStyle(
+        color: color,
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        fontFamily: fontFamily,
+        letterSpacing: letterSpacing),
+  );
+}
+
 Widget bigText(String text, Color? color, EdgeInsets? padding) {
   return customText(text, 36, FontWeight.w700, color, padding);
 }
@@ -94,12 +107,15 @@ Widget editText(
       suffixIcon: requireSuffixIcon,
       suffixIconColor: Colors.white,
       filled: true,
-      fillColor: Color.fromRGBO(97, 180, 209, 1),
+      fillColor: Color.fromRGBO(0, 172, 184, 0.5),
       border: OutlineInputBorder(
           borderSide: BorderSide.none, borderRadius: BorderRadius.circular(10)),
       hintText: hintText,
       hintStyle: const TextStyle(
-          fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white),
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+          color: Colors.white,
+          letterSpacing: 1.2),
     ),
     focusNode: focusNode,
     keyboardType: keyboardType,
@@ -108,7 +124,7 @@ Widget editText(
     obscureText: obscureText,
     maxLines: maxLines,
     style: const TextStyle(
-        fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white),
+        fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white),
     onEditingComplete: onEditingComplete,
     onChanged: onChanged,
     textCapitalization: textCapitalization,
@@ -140,7 +156,7 @@ Widget flexedTextButton(
     alignment: Alignment.center,
     decoration: const BoxDecoration(
       borderRadius: BorderRadius.all(Radius.circular(4)),
-      color: Color.fromRGBO(38, 125, 157, 1),
+      color: Color.fromRGBO(69, 177, 200, 1),
     ),
     child: TextButton(
         style: TextButton.styleFrom(minimumSize: const Size.fromHeight(40)),
@@ -148,4 +164,16 @@ Widget flexedTextButton(
         child: title2(
             text, Colors.white, const EdgeInsets.symmetric(vertical: 0))),
   );
+}
+
+Widget customIconButton(
+    String name, void Function() function, double height, double width) {
+  return InkWell(
+      onTap: function,
+      child: Image.asset(
+        name,
+        height: height,
+        width: width,
+        fit: BoxFit.contain,
+      ));
 }

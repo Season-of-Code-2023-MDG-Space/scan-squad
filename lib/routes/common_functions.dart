@@ -18,11 +18,16 @@ File xFileToFile(XFile pickedFile, Uint8List? uint8list) {
 
 Future<Position> getUserLocation() async {
   LocationPermission permission;
+  // permission = await Geolocator.requestPermission();
   permission = await Geolocator.checkPermission();
-
+  if (permission == LocationPermission.denied) {
+    permission = await Geolocator.requestPermission();
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error('Location Not Available');
+    }
+  }
   Position position = await Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.high);
-
   return position;
 }
 

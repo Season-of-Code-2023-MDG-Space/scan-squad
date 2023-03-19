@@ -21,8 +21,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: bigText3('Logged in as ${_currentUser.displayName}', Colors.black,
-          const EdgeInsets.all(0)),
-    );
+        child: titleName('Logged in as ${_currentUser.displayName}', 22,
+            FontWeight.w500, Colors.grey, 'MontSerrat', 0.8));
   }
 }

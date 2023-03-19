@@ -44,8 +44,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ThemeData().colorScheme.copyWith(primary: Colors.black),
-      ),
+          colorScheme: ThemeData().colorScheme.copyWith(primary: Colors.black),
+          fontFamily: 'SourceSans'),
       home: isLogin
           ? HomeScreenController(user: auth.currentUser!)
           : const LoginScreen(),

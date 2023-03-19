@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:scansquad/routes/common_functions.dart';
 import 'package:scansquad/routes/routes.dart';
 import 'package:scansquad/widgets/styling_widgets.dart';
 import '../../api/modal/load_file.dart';
+import '../../asset/images.dart';
 import '../../widgets/custom_widgets_class/customClipPath.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -23,12 +25,14 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(117, 202, 233, 1),
+      backgroundColor: Color.fromRGBO(167, 234, 235, 1),
       body: Stack(alignment: Alignment.topCenter, children: [
         Positioned(
-          child: customText('Welcome to Scrypt!!', 28, FontWeight.w700,
-              Colors.black, EdgeInsets.symmetric(vertical: 50)),
-        ),
+            child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 50),
+          child: titleName('Welcome to Scrypt!!', 28, FontWeight.w500,
+              Colors.black, 'Montserrat', 1),
+        )),
         ClipPath(
           clipper: CurveClipPath(),
           child: FutureBuilder<List<FileSystemEntity?>>(
@@ -77,23 +81,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                           horizontal: 0),
                                       scrollDirection: Axis.horizontal,
                                       itemBuilder: ((context, index) {
-                                        return InkWell(
-                                          onTap: (() {
-                                            print(
-                                                '======path=${snapshot.data?.reversed.toList()[index]?.absolute.path}');
-                                            openPdfFile(snapshot.data!.reversed
-                                                .toList()[index]!
-                                                .absolute
-                                                .path
-                                                .substring(30));
-                                          }),
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 15),
-                                            child: _fileViewIcon(
-                                              snapshot,
-                                              index,
-                                            ),
+                                        return Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 30),
+                                          child: _fileViewIcon(
+                                            snapshot,
+                                            index,
                                           ),
                                         );
                                       }),
@@ -106,10 +99,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 );
               } else {
-                return const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.black,
-                  ),
+                return const SpinKitFadingCube(
+                  color: const Color.fromRGBO(69, 177, 200, 1),
+                  size: 40.0,
                 );
               }
             },
@@ -125,58 +117,83 @@ Widget _fileViewIcon(
   int index,
 ) {
   return Container(
-    width: 100,
     decoration: BoxDecoration(
-        color: Color.fromRGBO(97, 179, 209, 0.4),
+        color: Color.fromRGBO(167, 234, 235, 1),
         borderRadius: BorderRadius.all(Radius.circular(30))),
-    child: Stack(alignment: Alignment.topCenter, children: [
-      Icon(
-        Icons.file_open,
-        size: 45,
-        color: Color.fromRGBO(55, 103, 121, 0.821),
-      ),
-      Positioned(
-          top: -5,
-          left: 60,
-          child: PopupMenuButton(
-              icon: Icon(
-                Icons.more_vert,
-                color: Color.fromRGBO(55, 103, 121, 0.821),
-                size: 20,
-              ),
-              color: Color.fromARGB(170, 255, 255, 255),
-              elevation: 0,
-              itemBuilder: ((context) {
-                return [
-                  PopupMenuItem(
-                      onTap: (() {
-                        sharePDF(snapshot.data?.reversed
-                            .toList()[index]
-                            ?.absolute
-                            .path);
-                      }),
-                      child: Text('Share')),
-                  PopupMenuItem(
-                      onTap: (() async {
-                        await openPdfFile(snapshot.data?.reversed
-                            .toList()[index]
-                            ?.absolute
-                            .path
-                            .substring(30));
-                      }),
-                      child: Text('Open'))
-                ];
-              }))),
-      Positioned(
-        bottom: 15,
-        child: Text(
-          '${snapshot.data?.reversed.toList()[index]?.absolute.path.substring(30)}',
-          style: TextStyle(
-              color: Color.fromRGBO(55, 103, 121, 0.821),
-              fontWeight: FontWeight.w700),
-        ),
-      ),
-    ]),
+    child: Stack(
+        alignment: Alignment.topCenter,
+        clipBehavior: Clip.none,
+        children: [
+          Image.asset(CommonIcons.fileIcon),
+          Positioned(
+              top: -3,
+              left: 30,
+              child: PopupMenuButton(
+                  icon: Icon(
+                    Icons.more_vert,
+                    color: Color.fromRGBO(55, 103, 121, 0.821),
+                    size: 20,
+                  ),
+                  color: Color.fromRGBO(236, 237, 238, 0.56),
+                  elevation: 0,
+                  itemBuilder: ((context) {
+                    return [
+                      PopupMenuItem(
+                        onTap: (() {
+                          sharePDF(snapshot.data?.reversed
+                              .toList()[index]
+                              ?.absolute
+                              .path);
+                        }),
+                        child: Container(
+                          width: 70,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Image.asset(
+                                CommonIcons.fshareIcon,
+                                height: 20,
+                              ),
+                              Text('Share'),
+                            ],
+                          ),
+                        ),
+                      ),
+                      PopupMenuItem(
+                        onTap: (() async {
+                          await openPdfFile(snapshot.data?.reversed
+                              .toList()[index]
+                              .absolute
+                              .path
+                              .substring(30));
+                        }),
+                        child: Container(
+                          width: 70,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Image.asset(
+                                CommonIcons.openFileIcon,
+                                height: 20,
+                              ),
+                              Text('Open'),
+                            ],
+                          ),
+                        ),
+                      )
+                    ];
+                  }))),
+          Positioned(
+            bottom: -20,
+            child: Text(
+              '${snapshot.data?.reversed.toList()[index]?.absolute.path.substring(30)}',
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                  color: Color.fromRGBO(55, 103, 121, 0.821),
+                  fontWeight: FontWeight.w700),
+            ),
+          ),
+        ]),
   );
 }
 
