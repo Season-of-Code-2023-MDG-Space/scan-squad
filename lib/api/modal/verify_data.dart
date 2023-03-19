@@ -5,9 +5,10 @@ Map<String, dynamic> verifyData(
   bool validity = false;
   var minimum_t, maximum_t;
   Map<String, dynamic> data;
-  if (allQrdatalist.isNotEmpty) {
+  if (allQrdatalist.isNotEmpty && allQrdatalist[0] != null) {
     String initialUserName =
         extractQRDataText(allQrdatalist[0]!).entries.first.value;
+
     List timeStamps = [];
     for (var i = 0; i < allQrdatalist.length; i++) {
       timeStamps.add((extractQRDataText(allQrdatalist[i]!)).entries.last.value);
@@ -16,7 +17,6 @@ Map<String, dynamic> verifyData(
         validity = true;
       }
     }
-
     formatTimeStamp(lastModifiedSync);
     timeStamps.sort();
     Map<String, String> time = getMinMaxTimeStamps(timeStamps);

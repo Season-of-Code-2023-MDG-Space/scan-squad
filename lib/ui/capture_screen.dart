@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:reorderable_grid_view/reorderable_grid_view.dart';
 import 'package:scansquad/api/modal/pick_item.dart';
 import 'package:scansquad/api/modal/process_image.dart';
+import 'package:scansquad/asset/images.dart';
 import 'package:scansquad/routes/routes.dart';
 import 'package:scansquad/widgets/custom_widgets_class/customAppBar.dart';
 import '../api/modal/generate_pdf.dart';
+import '../widgets/styling_widgets.dart';
 
 class CapturedImagesScreen extends StatefulWidget {
   const CapturedImagesScreen(
@@ -32,62 +34,53 @@ class _CapturedImagesScreenState extends State<CapturedImagesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton:
+          customIconButton(CommonIcons.clickMoreIcon, () async {
+        final pickedFile = await pickImage();
+        if (pickedFile != null) {
+          final mImage = await ImageProcess().writeExifData(
+            await pickedFile.readAsBytes(),
+            userName: _currentUser.displayName!,
+          );
+          setState(() {
+            _listUint8List.add(mImage);
+          });
+        }
+      }, 48, 48),
       appBar: AppBar(
+        elevation: 0,
         shape: CurveAppBar(),
-        backgroundColor: const Color.fromRGBO(38, 126, 157, 1),
+        backgroundColor: const Color.fromRGBO(69, 177, 200, 1),
         title: const Text(
-          "Scrypt",
-          style: TextStyle(fontSize: 26, fontWeight: FontWeight.w700),
+          "New File",
+          style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+              fontFamily: 'MontSerrat'),
         ),
         actions: [
-          IconButton(
-            onPressed: () async {
-              final pickedFile = await pickImage();
-              if (pickedFile != null) {
-                final mImage = await ImageProcess().writeExifData(
-                  await pickedFile.readAsBytes(),
-                  userName: _currentUser.displayName!,
-                );
-                setState(() {
-                  _listUint8List.add(mImage);
-                });
-              }
-            },
-            icon: const Icon(
-              Icons.add_a_photo_rounded,
-              size: 28,
-            ),
-          ),
-          const SizedBox(
-            width: 20,
-          ),
           Padding(
-            padding: const EdgeInsets.only(right: 20),
-            child: IconButton(
-              onPressed: () async {
-                if (_listUint8List.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text(
-                          'For creating a PDF , you must capture atleast one image')));
-                } else {
-                  var result = await showDialog(
-                    context: context,
-                    builder: (BuildContext context) =>
-                        _buildPopupDialog(context),
-                  );
-                  await convertToPdf(_listUint8List, result);
-                  await showDialog(
-                    context: context,
-                    builder: (BuildContext context) => _buildPopupSavedDialog(),
-                  );
-                  Navigator.pop(context);
-                }
-              },
-              icon: const Icon(
-                Icons.save_rounded,
-                size: 28,
-              ),
-            ),
+            padding: const EdgeInsets.only(right: 30),
+            child: customIconButton(CommonIcons.saveFileIcon, () async {
+              if (_listUint8List.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text(
+                        'For creating a PDF , you must capture atleast one image')));
+              } else {
+                var result = await showDialog(
+                  context: context,
+                  builder: (BuildContext context) => _buildPopupDialog(context),
+                );
+                await convertToPdf(_listUint8List, result);
+                await showDialog(
+                  context: context,
+                  builder: (BuildContext context) => _buildPopupSavedDialog(),
+                );
+                Navigator.pop(context);
+              }
+            }, 36, 36),
           )
         ],
       ),

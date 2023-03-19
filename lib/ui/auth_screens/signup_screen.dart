@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../../api/firebase/auth_validators.dart';
 import '../../api/firebase/fire_auth.dart';
 import '../../routes/routes.dart';
@@ -45,19 +46,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
         _focusVerifyPassword.unfocus();
       }),
       child: Scaffold(
-        backgroundColor: Color.fromRGBO(38, 126, 157, 1),
+        backgroundColor: Color.fromRGBO(69, 177, 200, 1),
         body: _isProcessing
-            ? const Center(
-                child: CircularProgressIndicator(
-                  backgroundColor: Colors.transparent,
-                  color: Colors.white,
-                ),
+            ? const SpinKitFadingCube(
+                color: const Color.fromRGBO(69, 177, 200, 1),
+                size: 40.0,
               )
             : SingleChildScrollView(
                 child: Stack(children: [
                   Positioned(
                     child: Center(
-                      child: bigText('Create an account', Colors.black,
+                      child: bigText(
+                          'Create an account',
+                          Color.fromARGB(255, 57, 57, 57),
                           const EdgeInsets.symmetric(vertical: 80)),
                     ),
                   ),
@@ -65,7 +66,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: ClipPath(
                       clipper: CurveClipPath(),
                       child: Container(
-                        height: MediaQuery.of(context).size.height,
+                        height: MediaQuery.of(context).size.height * 1.08,
                         color: Colors.white,
                         child: Column(
                           children: [

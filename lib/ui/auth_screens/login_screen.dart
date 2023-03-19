@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:scansquad/api/firebase/auth_validators.dart';
 import 'package:scansquad/routes/routes.dart';
 import 'package:scansquad/widgets/custom_widgets_class/customClipPath.dart';
 import 'package:scansquad/widgets/styling_widgets.dart';
 import '../../api/firebase/fire_auth.dart';
+import '../../asset/images.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -36,13 +38,11 @@ class _LoginScreenState extends State<LoginScreen> {
         _focusPassword.unfocus();
       }),
       child: Scaffold(
-        backgroundColor: Color.fromRGBO(38, 126, 157, 1),
+        backgroundColor: Color.fromRGBO(69, 177, 200, 1),
         body: _isProcessing
-            ? const Center(
-                child: CircularProgressIndicator(
-                  backgroundColor: Colors.transparent,
-                  color: Colors.white,
-                ),
+            ? const SpinKitFadingCube(
+                color: const Color.fromRGBO(69, 177, 200, 1),
+                size: 40.0,
               )
             : SingleChildScrollView(
                 child: Stack(children: [
@@ -52,9 +52,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(
-                            Icons.pages,
-                            size: 65,
+                          Image.asset(
+                            CommonIcons.logoIcon,
+                            height: 65,
+                            width: 65,
                           ),
                           const SizedBox(
                             width: 10,
@@ -62,11 +63,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                "Scrypt",
-                                style: TextStyle(
-                                    fontSize: 26, fontWeight: FontWeight.w700),
-                              ),
+                              titleName('Scrypt', 28, FontWeight.w800,
+                                  Colors.white, 'SedanSC', 1.0),
                               Text(
                                 'Tagline',
                                 style: TextStyle(
@@ -89,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             SizedBox(
                               height: MediaQuery.of(context).size.height * 0.4,
                             ),
-                            bigText('Login', Colors.black,
+                            bigText('Login', Color.fromARGB(255, 57, 57, 57),
                                 const EdgeInsets.symmetric(vertical: 30)),
                             Form(
                               key: _formKey,

@@ -1,15 +1,15 @@
-import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:scansquad/api/google_services/google_drive.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:scansquad/api/modal/pick_item.dart';
 import 'package:scansquad/api/modal/process_image.dart';
+import 'package:scansquad/asset/images.dart';
 import 'package:scansquad/ui/home/home_screen.dart';
 import 'package:scansquad/ui/profile_screen.dart';
 import 'package:scansquad/widgets/custom_widgets_class/customAppBar.dart';
 import 'package:scansquad/widgets/custom_widgets_class/customBottomBar.dart';
 import 'package:scansquad/widgets/navBar.dart';
+import 'package:scansquad/widgets/styling_widgets.dart';
 import '../routes/routes.dart';
 
 class HomeScreenController extends StatefulWidget {
@@ -47,54 +47,32 @@ class _HomeScreenControllerState extends State<HomeScreenController> {
       key: _scaffoldKey,
       drawer: NavBar(_currentUser),
       appBar: AppBar(
+        elevation: 0,
         shape: CurveAppBar(),
-        backgroundColor: const Color.fromRGBO(38, 126, 157, 1),
-        title: const Text(
-          "Scrypt",
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
-        ),
-        titleSpacing: 30,
-        leading: const Padding(
+        backgroundColor: const Color.fromRGBO(69, 177, 200, 1),
+        title: titleName(
+            'Scrypt', 28, FontWeight.w700, Colors.white, 'SedanSC', 1.2),
+        titleSpacing: 10,
+        leading: Padding(
           padding: EdgeInsets.only(left: 20),
-          child: Icon(
-            Icons.pages,
-            size: 50,
+          child: Image.asset(
+            CommonIcons.logoIcon,
           ),
         ),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 20),
-            child: IconButton(
-                onPressed: (() async {
-                  _scaffoldKey.currentState?.openDrawer();
-                }),
-                icon: Icon(
-                  Icons.menu_sharp,
-                  size: 30,
-                )),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 20),
-            child: IconButton(
-                onPressed: (() async {
-                  final file = await pickFiles();
-                  final fileToUpload = File(file!.files.first.path!);
-                  await GoogleDriveServices().uploadToNormal(fileToUpload);
-                }),
-                icon: Icon(
-                  Icons.sync,
-                  size: 30,
-                )),
+            child: customIconButton(CommonIcons.menuIcon, (() async {
+              _scaffoldKey.currentState?.openDrawer();
+            }), 25, 25),
           ),
         ],
       ),
       backgroundColor: Colors.white,
       body: _isProcessing
-          ? const Center(
-              child: CircularProgressIndicator(
-                backgroundColor: Colors.transparent,
-                color: Colors.black,
-              ),
+          ? const SpinKitFadingCube(
+              color: const Color.fromRGBO(69, 177, 200, 1),
+              size: 40.0,
             )
           : _pages[_selectedIndex],
       bottomNavigationBar: Stack(
@@ -107,8 +85,9 @@ class _HomeScreenControllerState extends State<HomeScreenController> {
                 height: 70,
                 width: 70,
                 child: FloatingActionButton(
+                  elevation: 0,
                   tooltip: 'Create a new PDF',
-                  backgroundColor: const Color.fromRGBO(97, 180, 209, 1),
+                  backgroundColor: Color.fromRGBO(92, 201, 203, 1),
                   onPressed: (() async {
                     setState(() {
                       _isProcessing = true;
@@ -140,17 +119,19 @@ class _HomeScreenControllerState extends State<HomeScreenController> {
               child: BottomNavigationBar(
                 elevation: 4,
                 iconSize: 32,
-                backgroundColor: const Color.fromRGBO(117, 202, 233, 1),
+                backgroundColor: const Color.fromRGBO(167, 234, 235, 1),
                 showSelectedLabels: false,
                 showUnselectedLabels: false,
                 mouseCursor: SystemMouseCursors.grab,
-                items: const [
+                items: [
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.home),
+                    activeIcon: Image.asset(CommonIcons.homeDarkIcon),
+                    icon: Image.asset(CommonIcons.homeLightIcon),
                     label: 'Home',
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.account_box_rounded),
+                    activeIcon: Image.asset(CommonIcons.userDarkIcon),
+                    icon: Image.asset(CommonIcons.userLightIcon),
                     label: 'Profile',
                   ),
                 ],

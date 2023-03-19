@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:scansquad/api/modal/pdfToImage.dart';
 import 'package:scansquad/api/modal/verify_data.dart';
+import 'package:scansquad/asset/images.dart';
 import 'package:scansquad/widgets/styling_widgets.dart';
 
 import '../api/modal/pick_item.dart';
@@ -20,7 +21,7 @@ class NavBar extends StatelessWidget {
           Container(
             height: MediaQuery.of(context).size.height * 0.3,
             decoration: const BoxDecoration(
-                color: Color.fromRGBO(38, 126, 157, 1),
+                color: Color.fromRGBO(69, 177, 200, 1),
                 borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(200),
                     bottomRight: Radius.circular(200))),
@@ -44,20 +45,24 @@ class NavBar extends StatelessWidget {
                 ),
                 Text(
                   user.displayName!,
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(
+                      color: Colors.white,
+                      letterSpacing: 1.1,
+                      fontWeight: FontWeight.w500),
                 ),
                 SizedBox(
                   height: 5,
                 ),
                 Text(
                   user.email!,
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.w500),
                 )
               ],
             ),
           ),
           ListTile(
-            leading: Icon(Icons.scanner),
+            leading: Image.asset(CommonIcons.scanIcon),
             title: Text('Verify PDF'),
             onTap: (() async {
               final result = await pickFiles();
@@ -84,7 +89,7 @@ class NavBar extends StatelessWidget {
             onTap: () => null,
           ),
           ListTile(
-            leading: Icon(Icons.description),
+            leading: Image.asset(CommonIcons.docIcon),
             title: Text('Policies'),
             onTap: () => null,
           ),
@@ -99,7 +104,7 @@ class NavBar extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.delete_forever),
+            leading: Image.asset(CommonIcons.deleteProfileIcon),
             title: Text('Delete Account'),
             onTap: () async {
               await showDialog(
