@@ -1,10 +1,12 @@
+import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:scansquad/api/google_services/google_drive.dart';
 import 'package:scansquad/api/modal/pdfToImage.dart';
 import 'package:scansquad/api/modal/verify_data.dart';
 import 'package:scansquad/asset/images.dart';
 import 'package:scansquad/widgets/styling_widgets.dart';
-
 import '../api/modal/pick_item.dart';
 import '../routes/routes.dart';
 
@@ -82,6 +84,30 @@ class NavBar extends StatelessWidget {
               goToMyDocsPage(context);
             },
           ),
+          ListTile(
+            leading: Image.asset(
+              CommonIcons.uploadIcon,
+              height: 24,
+              width: 24,
+            ),
+            title: Text('Sync Files'),
+            onTap: () async {
+              if (await GoogleDriveServices().uploadToDrive(
+                  File((await pickFiles())!.files.first.path!))) {
+                Fluttertoast.showToast(msg: 'Upload Sucessful');
+              } else {
+                Fluttertoast.showToast(msg: 'Issue uploading the file');
+              }
+            },
+          ),
+          ListTile(
+            leading: Image.asset(CommonIcons.deleteProfileIcon),
+            title: Text('Sign Out Google'),
+            onTap: () async {
+              await GoogleDriveServices().logOutGoogle();
+              Fluttertoast.showToast(msg: 'Signed Out of Google');
+            },
+          ),
           Divider(),
           ListTile(
             leading: Icon(Icons.settings),
@@ -150,6 +176,7 @@ Widget _warningLogoutPopUp(BuildContext context) {
       customTextButton(
         onPressed: (() async {
           await FirebaseAuth.instance.signOut();
+          await GoogleDriveServices().logOutGoogle();
           goToLoginPage(context);
         }),
         labelText: 'Yes',
