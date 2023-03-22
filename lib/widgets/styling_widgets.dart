@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 Widget customText(String text, double fontSize, FontWeight fontWeight,
     Color? color, EdgeInsets? padding) {
@@ -176,4 +177,11 @@ Widget customIconButton(
         width: width,
         fit: BoxFit.contain,
       ));
+}
+
+Widget customSpinLoader(double size) {
+  return SpinKitFadingCube(
+    color: const Color.fromRGBO(69, 177, 200, 1),
+    size: size,
+  );
 }
