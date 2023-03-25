@@ -41,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: Color.fromRGBO(69, 177, 200, 1),
         body: _isProcessing
             ? const SpinKitFadingCube(
-                color: const Color.fromRGBO(69, 177, 200, 1),
+                color: Color.fromARGB(255, 28, 70, 80),
                 size: 40.0,
               )
             : SingleChildScrollView(
@@ -54,8 +54,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           Image.asset(
                             CommonIcons.logoIcon,
-                            height: 65,
-                            width: 65,
+                            height: 75,
+                            width: 75,
                           ),
                           const SizedBox(
                             width: 10,
@@ -65,11 +65,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             children: [
                               titleName('Scrypt', 28, FontWeight.w800,
                                   Colors.white, 'SedanSC', 1.0),
-                              Text(
-                                'Tagline',
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w500),
-                              )
+                              heading2('Scan, Save and Secure', Colors.white,
+                                  EdgeInsets.zero),
                             ],
                           )
                         ],

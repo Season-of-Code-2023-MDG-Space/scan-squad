@@ -47,7 +47,8 @@ class _HomeScreenControllerState extends State<HomeScreenController> {
       key: _scaffoldKey,
       drawer: NavBar(_currentUser),
       appBar: AppBar(
-        elevation: 0,
+        elevation: 5,
+        shadowColor: Color.fromARGB(236, 251, 250, 250),
         shape: CurveAppBar(),
         backgroundColor: const Color.fromRGBO(69, 177, 200, 1),
         title: titleName(

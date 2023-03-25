@@ -59,7 +59,7 @@ dependencies:
   googleapis: ^10.1.0
   google_sign_in: ^6.0.2
   http: ^0.13.5
-
+  shared_preferences: ^2.0.20
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -111,6 +111,11 @@ flutter:
         - asset: assets/fonts/SourceSansPro-Bold.ttf
         - asset: assets/fonts/SourceSansPro-Light.ttf
         - asset: assets/fonts/SourceSansPro-Regular.ttf
+    - family: LexendDeca
+      fonts:
+        - asset: assets/fonts/LexendDeca-Bold.ttf
+        - asset: assets/fonts/LexendDeca-Medium.ttf
+        - asset: assets/fonts/LexendDeca-Regular.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

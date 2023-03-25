@@ -68,7 +68,7 @@ Widget heading1(String text, Color? color, EdgeInsets? padding) {
 }
 
 Widget heading2(String text, Color? color, EdgeInsets? padding) {
-  return customText(text, 14, FontWeight.w400, color, padding);
+  return customText(text, 16, FontWeight.w400, color, padding);
 }
 
 Widget heading3(String text, Color? color, EdgeInsets? padding) {
@@ -183,5 +183,38 @@ Widget customSpinLoader(double size) {
   return SpinKitFadingCube(
     color: const Color.fromRGBO(69, 177, 200, 1),
     size: size,
+  );
+}
+
+Widget customListContainerIcon(
+    String text, Color? color, List<Widget> actions, bool isEnabled) {
+  return Container(
+    margin: const EdgeInsets.symmetric(horizontal: 40),
+    decoration: BoxDecoration(
+      color: isEnabled
+          ? Color.fromRGBO(167, 234, 235, 1)
+          : Color.fromRGBO(235, 235, 228, 1),
+      borderRadius: BorderRadius.all(Radius.circular(10)),
+      boxShadow: [
+        BoxShadow(
+          color: Color.fromRGBO(0, 0, 0, 0.1),
+          spreadRadius: 2,
+          blurRadius: 5,
+          offset: Offset(0, 2),
+        )
+      ],
+    ),
+    child: Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          heading2(text, color, EdgeInsets.zero),
+          Row(
+            children: actions,
+          )
+        ],
+      ),
+    ),
   );
 }

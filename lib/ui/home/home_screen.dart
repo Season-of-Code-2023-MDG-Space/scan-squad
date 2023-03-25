@@ -36,7 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
       },
     );
     checkIfLogin();
-    setState(() {});
   }
 
   @override
@@ -171,73 +170,95 @@ Widget _fileViewIcon(
 ) {
   return Column(
     children: [
-      Stack(
-        children: [
-          Image.asset(
-            CommonIcons.fileIcon,
-            height: 60,
-          ),
-          Positioned(
-            top: -6,
-            left: 16,
-            child: PopupMenuButton(
-              icon: const Icon(
-                Icons.more_vert,
-                color: Color.fromRGBO(55, 103, 121, 0.821),
-                size: 20,
-              ),
-              color: Color.fromRGBO(236, 237, 238, 0.56),
-              elevation: 0,
-              itemBuilder: ((context) {
-                return [
-                  PopupMenuItem(
-                    onTap: (() {
-                      sharePDF(snapshot.data?.reversed
-                          .toList()[index]
-                          ?.absolute
-                          .path);
-                    }),
-                    child: Container(
-                      width: 70,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Image.asset(
-                            CommonIcons.fshareIcon,
-                            height: 16,
-                          ),
-                          Text('Share'),
-                        ],
-                      ),
-                    ),
-                  ),
-                  PopupMenuItem(
-                    onTap: (() async {
-                      await openPdfFile(snapshot.data?.reversed
-                          .toList()[index]
-                          .absolute
-                          .path
-                          .substring(30));
-                    }),
-                    child: Container(
-                      width: 70,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Image.asset(
-                            CommonIcons.openFileIcon,
-                            height: 16,
-                          ),
-                          Text('Open'),
-                        ],
-                      ),
-                    ),
-                  )
-                ];
-              }),
+      Container(
+        decoration: const BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Color.fromRGBO(0, 0, 0, 0.1),
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: Offset(0, 3), // changes position of shadow
             ),
-          ),
-        ],
+          ],
+        ),
+        child: Stack(
+          children: [
+            Image.asset(
+              CommonIcons.fileIcon,
+              height: 60,
+            ),
+            Positioned(
+              top: -6,
+              left: 16,
+              child: PopupMenuButton(
+                icon: const Icon(
+                  Icons.more_vert,
+                  color: Color.fromRGBO(55, 103, 121, 0.821),
+                  size: 20,
+                ),
+                color: Color.fromRGBO(236, 237, 238, 0.56),
+                elevation: 0,
+                itemBuilder: ((context) {
+                  return [
+                    PopupMenuItem(
+                      onTap: (() {
+                        sharePDF(snapshot.data?.reversed
+                            .toList()[index]
+                            ?.absolute
+                            .path);
+                      }),
+                      child: Container(
+                        width: 70,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Image.asset(
+                              CommonIcons.fshareIcon,
+                              height: 16,
+                            ),
+                            Text(
+                              'Share',
+                              style: TextStyle(
+                                color: Color.fromRGBO(23, 42, 49, 0.82),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    PopupMenuItem(
+                      onTap: (() async {
+                        await openPdfFile(snapshot.data?.reversed
+                            .toList()[index]
+                            .absolute
+                            .path
+                            .substring(30));
+                      }),
+                      child: Container(
+                        width: 70,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Image.asset(
+                              CommonIcons.openFileIcon,
+                              height: 16,
+                            ),
+                            Text(
+                              'Open',
+                              style: TextStyle(
+                                color: Color.fromRGBO(23, 42, 49, 0.82),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  ];
+                }),
+              ),
+            ),
+          ],
+        ),
       ),
       Text(
         '${snapshot.data?.reversed.toList()[index]?.absolute.path.substring(30)}',
@@ -256,9 +277,21 @@ Widget _driveFileViewIcon(
 ) {
   return Column(
     children: [
-      Image.asset(
-        CommonIcons.fileIcon,
-        height: 60,
+      Container(
+        decoration: const BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Color.fromRGBO(0, 0, 0, 0.1),
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: Offset(0, 3), // changes position of shadow
+            ),
+          ],
+        ),
+        child: Image.asset(
+          CommonIcons.fileIcon,
+          height: 60,
+        ),
       ),
       Text(
         snapshot.data[index].name,
@@ -273,7 +306,7 @@ Widget _driveFileViewIcon(
 
 Widget _customListView(AsyncSnapshot snapshot,
     Widget Function(AsyncSnapshot<dynamic>, int) iconName) {
-  return SizedBox(
+  return Container(
     height: 100,
     child: ListView.builder(
       itemCount: snapshot.data?.length,

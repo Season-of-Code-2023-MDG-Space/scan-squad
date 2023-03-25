@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:reorderable_grid_view/reorderable_grid_view.dart';
 import 'package:scansquad/api/modal/pick_item.dart';
 import 'package:scansquad/api/modal/process_image.dart';
@@ -50,7 +51,8 @@ class _CapturedImagesScreenState extends State<CapturedImagesScreen> {
         }
       }, 48, 48),
       appBar: AppBar(
-        elevation: 0,
+        elevation: 5,
+        shadowColor: Color.fromARGB(236, 251, 250, 250),
         shape: CurveAppBar(),
         backgroundColor: const Color.fromRGBO(69, 177, 200, 1),
         title: const Text(
@@ -65,19 +67,14 @@ class _CapturedImagesScreenState extends State<CapturedImagesScreen> {
             padding: const EdgeInsets.only(right: 30),
             child: customIconButton(CommonIcons.saveFileIcon, () async {
               if (_listUint8List.isEmpty) {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text(
-                        'For creating a PDF , you must capture atleast one image')));
+                Fluttertoast.showToast(msg: 'Please capture atleast one image');
               } else {
                 var result = await showDialog(
                   context: context,
                   builder: (BuildContext context) => _buildPopupDialog(context),
                 );
                 await convertToPdf(_listUint8List, result);
-                await showDialog(
-                  context: context,
-                  builder: (BuildContext context) => _buildPopupSavedDialog(),
-                );
+                Fluttertoast.showToast(msg: 'File saved in storage');
                 Navigator.pop(context);
               }
             }, 36, 36),

@@ -6,7 +6,9 @@ import 'package:scansquad/api/google_services/google_drive.dart';
 import 'package:scansquad/api/modal/pdfToImage.dart';
 import 'package:scansquad/api/modal/verify_data.dart';
 import 'package:scansquad/asset/images.dart';
+import 'package:scansquad/ui/profile_screen.dart';
 import 'package:scansquad/widgets/styling_widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../api/modal/pick_item.dart';
 import '../routes/routes.dart';
 
@@ -78,7 +80,7 @@ class NavBar extends StatelessWidget {
             }),
           ),
           ListTile(
-            leading: Icon(Icons.folder),
+            leading: Icon(Icons.folder_open_outlined),
             title: Text('My Docs'),
             onTap: () {
               goToMyDocsPage(context);
@@ -86,7 +88,7 @@ class NavBar extends StatelessWidget {
           ),
           ListTile(
             leading: Image.asset(
-              CommonIcons.uploadIcon,
+              CommonIcons.syncIcon,
               height: 24,
               width: 24,
             ),
@@ -100,73 +102,36 @@ class NavBar extends StatelessWidget {
               }
             },
           ),
-          ListTile(
-            leading: Image.asset(CommonIcons.deleteProfileIcon),
-            title: Text('Sign Out Google'),
-            onTap: () async {
-              await GoogleDriveServices().logOutGoogle();
-              Fluttertoast.showToast(msg: 'Signed Out of Google');
-            },
-          ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.settings),
+            leading: Icon(Icons.settings_outlined),
             title: Text('Settings'),
             onTap: () => null,
           ),
           ListTile(
-            leading: Image.asset(CommonIcons.docIcon),
+            leading: Image.asset(CommonIcons.policyIcon, height: 24, width: 24),
             title: Text('Policies'),
+            onTap: () => null,
+          ),
+          ListTile(
+            leading: Icon(Icons.feedback_outlined),
+            title: Text('Feedback'),
             onTap: () => null,
           ),
           Divider(),
           ListTile(
             title: Text('Logout'),
-            leading: Icon(Icons.exit_to_app),
+            leading: Icon(Icons.exit_to_app_sharp),
             onTap: () async {
               await showDialog(
                   context: context,
                   builder: ((context) => _warningLogoutPopUp(context)));
             },
           ),
-          ListTile(
-            leading: Image.asset(CommonIcons.deleteProfileIcon),
-            title: Text('Delete Account'),
-            onTap: () async {
-              await showDialog(
-                  context: context,
-                  builder: ((context) => _warningDeletePopUp(context)));
-            },
-          ),
         ],
       ),
     );
   }
-}
-
-Widget _warningDeletePopUp(BuildContext context) {
-  return AlertDialog(
-    title: const Text('Are you sure you wish to delete profile?'),
-    content: const Text(
-        'You will never be able to restore your account in future. We suggest keeping a backup of your files and media before performing this action.'),
-    actions: [
-      customTextButton(
-        labelText: 'Yes',
-        onPressed: (() async {
-          await FirebaseAuth.instance.currentUser?.delete();
-          ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('User deleted sucessfully')));
-          goToLoginPage(context);
-        }),
-      ),
-      customTextButton(
-        labelText: 'No',
-        onPressed: (() async {
-          Navigator.pop(context);
-        }),
-      )
-    ],
-  );
 }
 
 Widget _warningLogoutPopUp(BuildContext context) {
@@ -177,6 +142,7 @@ Widget _warningLogoutPopUp(BuildContext context) {
         onPressed: (() async {
           await FirebaseAuth.instance.signOut();
           await GoogleDriveServices().logOutGoogle();
+          (await SharedPreferences.getInstance()).clear();
           goToLoginPage(context);
         }),
         labelText: 'Yes',
@@ -229,7 +195,7 @@ Widget _buildVerifyPopupDialog(
           ),
     content: validityStat
         ? Container(
-            height: 190,
+            height: 210,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
