@@ -49,7 +49,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         backgroundColor: Color.fromRGBO(69, 177, 200, 1),
         body: _isProcessing
             ? const SpinKitFadingCube(
-                color: const Color.fromRGBO(69, 177, 200, 1),
+                color: Color.fromARGB(255, 28, 70, 80),
                 size: 40.0,
               )
             : SingleChildScrollView(
@@ -59,14 +59,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       child: bigText(
                           'Create an account',
                           Color.fromARGB(255, 57, 57, 57),
-                          const EdgeInsets.symmetric(vertical: 80)),
+                          const EdgeInsets.symmetric(vertical: 70)),
                     ),
                   ),
                   SingleChildScrollView(
                     child: ClipPath(
                       clipper: CurveClipPath(),
                       child: Container(
-                        height: MediaQuery.of(context).size.height * 1.08,
                         color: Colors.white,
                         child: Column(
                           children: [
@@ -168,7 +167,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 _focusName.unfocus();
                                 _focusEmail.unfocus();
                                 _focusPassword.unfocus();
-                                if (_formKey.currentState!.validate() ||
+                                if (_formKey.currentState!.validate() &&
                                     _passwordVerifyTextController.text ==
                                         _passwordTextController.text) {
                                   setState(() {

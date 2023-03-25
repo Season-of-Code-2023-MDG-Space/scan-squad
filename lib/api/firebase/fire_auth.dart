@@ -69,4 +69,9 @@ class FireAuth {
         .sendPasswordResetEmail(email: email!)
         .catchError((e) => print(e));
   }
+
+  static Future<void> deleteAccount(User user) async {
+    await FirebaseFirestore.instance.collection('users').doc(user.uid).delete();
+    await user.delete();
+  }
 }

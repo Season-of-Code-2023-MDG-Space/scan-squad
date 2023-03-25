@@ -14,4 +14,9 @@ class CommonIcons {
   static const String fshareIcon = 'assets/images/share-icon.png';
   static const String uploadIcon = 'assets/images/upload-icon.png';
   static const String openFileIcon = 'assets/images/open-file.png';
+  static const String syncIcon = 'assets/images/folder.png';
+  static const String forwardArrowIcon = 'assets/images/forward_arrow.png';
+  static const String forwardArrowDisabledIcon =
+      'assets/images/forward_arrow_disabled.png';
+  static const String policyIcon = 'assets/images/compliant.png';
 }
