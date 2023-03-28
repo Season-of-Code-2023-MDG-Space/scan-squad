@@ -38,6 +38,8 @@ The PDF scanning tool will provide a secure and convenient way for students to c
 - flutter_secure_storage: ^8.0.0
 - googleapis: ^10.1.0
 - google_sign_in: ^6.0.2
+## Figma Design File
+[Design File](https://www.figma.com/file/ZHxD6sNgAbWMgtLu4ktdF3/Scrypt?node-id=0-1&t=vLd3wJB8uAo9Ygfz-0)
 ## Screenshots
 ![photo-2023-03-28-18-09-38.jpg](https://i.postimg.cc/pXLwb8rN/photo-2023-03-28-18-09-38.jpg)   ![photo-2023-03-28-18-09-40.jpg](https://i.postimg.cc/kgb7VZSF/photo-2023-03-28-18-09-40.jpg) [![photo-2023-03-28-18-09-24.jpg](https://i.postimg.cc/XvN32vhx/photo-2023-03-28-18-09-24.jpg)](https://postimg.cc/RWYjhvvn) [![photo-2023-03-28-18-09-34.jpg](https://i.postimg.cc/d3j4SJgm/photo-2023-03-28-18-09-34.jpg)](https://postimg.cc/Zv08WzbC) [![photo-2023-03-28-18-09-30.jpg](https://i.postimg.cc/Kv95Kpbz/photo-2023-03-28-18-09-30.jpg)](https://postimg.cc/nCDmgkCb) [![photo-2023-03-28-18-09-27.jpg](https://i.postimg.cc/7ZGS5xXs/photo-2023-03-28-18-09-27.jpg)](https://postimg.cc/HrmrK1qX) [![photo-2023-03-28-18-09-15.jpg](https://i.postimg.cc/GtfHRD0c/photo-2023-03-28-18-09-15.jpg)](https://postimg.cc/QKpXkHxP) [![photo-2023-03-28-18-09-17.jpg](https://i.postimg.cc/ydQNhR8F/photo-2023-03-28-18-09-17.jpg)](https://postimg.cc/LYPR2nfX) [![photo-2023-03-28-18-09-47.jpg](https://i.postimg.cc/YCRj2TBn/photo-2023-03-28-18-09-47.jpg)](https://postimg.cc/NKyQpJMm) [![photo-2023-03-28-18-08-51.jpg](https://i.postimg.cc/9M7W9nsj/photo-2023-03-28-18-08-51.jpg)](https://postimg.cc/HcTDDBpS)  [![photo-2023-03-28-18-08-56.jpg](https://i.postimg.cc/LXRykqb6/photo-2023-03-28-18-08-56.jpg)](https://postimg.cc/McPbqGwh) [![photo-2023-03-28-18-09-20.jpg](https://i.postimg.cc/m2wT7Mph/photo-2023-03-28-18-09-20.jpg)](https://postimg.cc/ZCWkS9Sh)
 
